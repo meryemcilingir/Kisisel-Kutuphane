@@ -82,6 +82,17 @@ src/app/
 | SCSS | Stil, dark mode |
 
 ---
+## Proje İstatistikleri
+
+| Kriter | Adet | Detay |
+|--------|------|-------|
+| Component | 8 | AppComponent, BooksListComponent, BooksFormComponent, DashboardComponent, BookDetailComponent, ConfirmDialogComponent, EmptyStateComponent, + |
+| Service | 3 | BooksService, StorageService, GoogleBooksService |
+| Model / Interface | 4 | Book, OkumaDurumu, Etiket, OkumaHedefi |
+| Route Guard | 1 | UnsavedChangesGuard |
+| Custom Validator | 2 | sayfaSayisiValidator, puanValidator |
+| Custom Pipe | 1 | DurumEtiketPipe |
+| Custom Directive | 1 | DurumRozetDirective |
 
 ## Özel Yapı Taşları
 
