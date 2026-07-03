@@ -1,9 +1,10 @@
+cat > /home/claude/README.md << 'READMEEOF'
 # 📚 Kişisel Kütüphane
 
 Angular ile geliştirilmiş kişisel kitap takip uygulaması. Okuduğunuz, okuyacağınız ve okumakta olduğunuz kitapları yönetin.
 
-🔗 **Demo:** [Vercel Deploy Linki](#) *(yakında eklenecek)*  
-📁 **Repo:** [github.com/KULLANICI_ADIN/kutuphane-app](#)
+🔗 **Demo:** [kisisel-kutuphane.vercel.app](https://kisisel-kutuphane.vercel.app)  
+📁 **Repo:** [github.com/meryemcilingir/Kisisel-Kutuphane](https://github.com/meryemcilingir/Kisisel-Kutuphane)
 
 ---
 
@@ -25,17 +26,17 @@ Angular ile geliştirilmiş kişisel kitap takip uygulaması. Okuduğunuz, okuya
 
 ## Kurulum
 
-```bash
+\`\`\`bash
 # Depoyu klonla
-git clone https://github.com/KULLANICI_ADIN/kutuphane-app.git
-cd kutuphane-app
+git clone https://github.com/meryemcilingir/Kisisel-Kutuphane.git
+cd Kisisel-Kutuphane
 
 # Bağımlılıkları yükle
-npm install
+npm install --legacy-peer-deps
 
 # Geliştirme sunucusunu başlat
 ng serve
-```
+\`\`\`
 
 Tarayıcıda `http://localhost:4200` adresini aç.
 
@@ -45,7 +46,7 @@ Tarayıcıda `http://localhost:4200` adresini aç.
 
 Proje **feature-based** mimari ile kurgulanmıştır:
 
-```
+\`\`\`
 src/app/
 ├── core/
 │   ├── models/          # Book arayüzü ve tip tanımları
@@ -63,7 +64,7 @@ src/app/
             ├── books-list/   # Ana sayfa (kanban, filtre, arama)
             ├── books-form/   # Kitap ekleme/düzenleme formu
             └── dashboard/    # İstatistikler ve grafikler
-```
+\`\`\`
 
 ---
 
@@ -100,3 +101,4 @@ src/app/
 ## Geliştirici
 
 **Meryem Çilingir** — Staj Projesi, 2026
+READMEEOF
