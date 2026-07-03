@@ -1,0 +1,180 @@
+﻿<div class="form-sayfa">
+  <div class="form-kart">
+    <div class="form-baslik">
+      <button mat-icon-button (click)="geriDon()" class="geri-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h1>{{ duzenlemeModu ? 'Kitabı Düzenle' : 'Yeni Kitap Ekle' }}</h1>
+        <p>{{ duzenlemeModu ? 'Kitap bilgilerini güncelle' : 'Kütüphanene yeni bir kitap ekle' }}</p>
+      </div>
+    </div>
+
+    @if (!duzenlemeModu) {
+      <div class="google-arama-bolumu">
+        <p class="google-aciklama">Kitap adını yaz, bilgileri otomatik dolduralım</p>
+        <div class="google-arama-wrapper">
+          <mat-icon class="google-arama-ikon">search</mat-icon>
+          <input
+            class="google-arama-input"
+            [(ngModel)]="googleArama"
+            (input)="googleAramaYap($event)"
+            placeholder="Kitap adı veya yazar ara..."
+            autocomplete="off">
+          @if (aramaYukleniyor()) {
+            <mat-spinner diameter="20" class="spinner"></mat-spinner>
+          }
+        </div>
+
+        @if (googleSonuclar().length > 0) {
+          <div class="google-sonuclar">
+            @for (kitap of googleSonuclar(); track kitap.id) {
+              <div class="google-sonuc-item" (click)="googleKitapSec(kitap)">
+                @if (kitap.kapak) {
+                  <img [src]="kitap.kapak" [alt]="kitap.ad" class="kitap-kapak">
+                } @else {
+                  <div class="kapak-placeholder"></div>
+                }
+                <div class="google-kitap-bilgi">
+                  <span class="google-kitap-ad">{{ kitap.ad }}</span>
+                  <span class="google-kitap-yazar">{{ kitap.yazar }}</span>
+                  @if (kitap.sayfaSayisi) {
+                    <span class="google-kitap-sayfa">{{ kitap.sayfaSayisi }} sayfa</span>
+                  }
+                </div>
+                <mat-icon class="secim-ikon">arrow_forward</mat-icon>
+              </div>
+            }
+          </div>
+        }
+
+        @if (secilenKapak()) {
+          <div class="secilen-kitap-onizleme">
+            <img [src]="secilenKapak()" alt="Kapak" class="onizleme-kapak">
+            <span>Kitap seçildi, bilgiler dolduruldu!</span>
+          </div>
+        }
+
+        <div class="ayrac">
+          <span>veya manuel gir</span>
+        </div>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="kaydet()">
+      <div class="form-grid">
+
+        <div class="form-grup tam-genislik">
+  <label>Kitap Adı <span class="zorunlu">*</span></label>
+  <div class="input-wrapper">
+    <mat-icon class="input-ikon">book</mat-icon>
+    <input formControlName="ad" placeholder="Kitap adını girin" class="ozel-input"
+      (input)="karakterSinirla('ad', 100)">
+  </div>
+  <div class="karakter-sayac">{{ (form.get('ad')?.value?.length ?? 0) }} / 100</div>
+  @if (form.get('ad')?.hasError('required') && form.get('ad')?.touched) {
+    <span class="hata-mesaj">Kitap adı zorunludur</span>
+  }
+</div>
+
+      <div class="form-grup tam-genislik">
+  <label>Yazar <span class="zorunlu">*</span></label>
+  <div class="input-wrapper">
+    <mat-icon class="input-ikon">person</mat-icon>
+    <input formControlName="yazar" placeholder="Yazar adını girin" class="ozel-input"
+      (input)="karakterSinirla('yazar', 50)">
+  </div>
+  <div class="karakter-sayac">{{ (form.get('yazar')?.value?.length ?? 0) }} / 50</div>
+  @if (form.get('yazar')?.hasError('required') && form.get('yazar')?.touched) {
+    <span class="hata-mesaj">Yazar adı zorunludur</span>
+  }
+</div>
+
+        <div class="form-grup">
+          <label>Tür</label>
+          <div class="input-wrapper select-wrapper">
+            <mat-icon class="input-ikon">category</mat-icon>
+            <select formControlName="tur" class="ozel-select">
+              <option value="">Seçiniz</option>
+              <option value="Roman">Roman</option>
+              <option value="Bilim Kurgu">Bilim Kurgu</option>
+              <option value="Tarih">Tarih</option>
+              <option value="Kişisel Gelişim">Kişisel Gelişim</option>
+              <option value="Felsefe">Felsefe</option>
+              <option value="Biyografi">Biyografi</option>
+              <option value="Diğer">Diğer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grup">
+          <label>Okuma Durumu <span class="zorunlu">*</span></label>
+          <div class="input-wrapper select-wrapper">
+            <mat-icon class="input-ikon">bookmark</mat-icon>
+            <select formControlName="durum" class="ozel-select">
+              <option value="okunacak">Okunacak</option>
+              <option value="okunuyor">Okunuyor</option>
+              <option value="okundu">Okundu</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grup">
+          <label>Sayfa Sayısı</label>
+          <div class="input-wrapper">
+            <mat-icon class="input-ikon">menu_book</mat-icon>
+            <input type="number" formControlName="sayfaSayisi" placeholder="Örn: 320" class="ozel-input" max="50000" min="1">
+          </div>
+          @if (form.get('sayfaSayisi')?.hasError('gecersizSayfa')) {
+            <span class="hata-mesaj">Sayfa sayısı 0'dan büyük olmalıdır</span>
+          }
+        </div>
+
+        <div class="form-grup">
+          <label>Puan (1-5)</label>
+          <div class="yildiz-grup">
+            @for (y of [1,2,3,4,5]; track y) {
+              <button type="button" class="yildiz-btn"
+                [class.aktif]="(form.get('puan')?.value ?? 0) >= y"
+                (click)="puanSec(y)">★</button>
+            }
+          </div>
+        </div>
+
+        <div class="form-grup tam-genislik">
+          <label>Etiketler</label>
+          <div class="etiket-grup">
+            @for (etiket of etiketSecenekleri; track etiket) {
+              <button type="button" class="etiket-btn"
+                [class.secili]="etiketSecildi(etiket)"
+                (click)="etiketToggle(etiket)">
+                {{ etiket }}
+              </button>
+            }
+          </div>
+        </div>
+
+      <div class="form-grup tam-genislik">
+  <label>Notlarım</label>
+  <div class="input-wrapper">
+    <mat-icon class="input-ikon" style="align-self:flex-start;margin-top:12px">notes</mat-icon>
+    <textarea formControlName="not" rows="3" placeholder="Kitap hakkında notlarınız..." class="ozel-input"
+      (input)="karakterSinirla('not', 1000)"></textarea>
+  </div>
+  <div class="karakter-sayac">{{ (form.get('not')?.value?.length ?? 0) }} / 500</div>
+</div>
+
+      </div>
+
+      <div class="butonlar">
+        <button type="button" class="iptal-btn" (click)="geriDon()">
+          <mat-icon>close</mat-icon> İptal
+        </button>
+        <button type="submit" class="kaydet-btn" [disabled]="form.invalid">
+          <mat-icon>{{ duzenlemeModu ? 'save' : 'add' }}</mat-icon>
+          {{ duzenlemeModu ? 'Güncelle' : 'Kaydet' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

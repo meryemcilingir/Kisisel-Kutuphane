@@ -1,0 +1,28 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  gap: 16px;
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-top: 8px;
+
+  .empty-icon { font-size: 56px; line-height: 1; }
+
+  h3 { margin: 0; font-size: 20px; color: #374151; }
+  p { margin: 0; color: #9ca3af; font-size: 15px; }
+
+  button {
+    padding: 12px 28px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    background: #c9a84c !important;
+    color: #1a1f2e !important;
+    margin-top: 8px;
+  }
+}

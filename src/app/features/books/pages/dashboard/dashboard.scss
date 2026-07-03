@@ -1,0 +1,93 @@
+.sayfa {
+  padding: 24px; max-width: 1200px; margin: 0 auto; overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.baslik-satiri {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  h1 { margin: 0; font-size: 28px; }
+}
+
+.ozet-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-bottom: 24px;
+}
+
+.ozet-kart {
+  border-radius: 16px; padding: 20px; color: white;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+  mat-icon { font-size: 36px; width: 36px; height: 36px; opacity: 0.9; }
+
+  div {
+    display: flex; flex-direction: column; gap: 2px;
+    .ozet-sayi { font-size: 28px; font-weight: 700; line-height: 1; }
+    .ozet-etiket { font-size: 13px; opacity: 0.85; }
+  }
+
+  &.mor { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+  &.yesil { background: linear-gradient(135deg, #22c55e, #16a34a); }
+  &.mavi { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+  &.turuncu { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  &.pembe { background: linear-gradient(135deg, #ec4899, #db2777); }
+  &.acik-mavi { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+}
+
+.grafik-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.grafik-kart {
+  border-radius: 16px !important;
+  h2 { margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1f2937; }
+}
+
+.grafik-container {
+  position: relative; height: 250px; display: flex; justify-content: center;
+
+  @media (max-width: 600px) {
+    height: 200px;
+  }
+}
+.bos-grafik { text-align: center; color: #9ca3af; padding: 60px 0; font-size: 14px; }
+
+.yazar-listesi {
+  display: flex; flex-direction: column; gap: 12px;
+
+  .yazar-satiri {
+    display: flex; align-items: center; gap: 12px;
+
+    .yazar-ad {
+      width: 120px; font-size: 13px; font-weight: 600; color: #374151;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .yazar-bar-wrapper {
+      flex: 1; height: 8px; background: #f3f4f6;
+      border-radius: 20px; overflow: hidden;
+
+      .yazar-bar {
+        height: 100%; background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 20px; transition: width 0.5s;
+      }
+    }
+    .yazar-sayi { font-size: 13px; font-weight: 700; color: #764ba2; min-width: 20px; text-align: right; }
+  }
+}
+
+@media (max-width: 768px) {
+  .ozet-grid { grid-template-columns: repeat(2, 1fr); }
+  .grafik-grid { grid-template-columns: 1fr; }
+  .baslik-satiri h1 { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .sayfa { padding: 16px; }
+  .ozet-grid { grid-template-columns: 1fr; }
+  .ozet-kart {
+    padding: 14px;
+    .ozet-sayi { font-size: 22px; }
+    mat-icon { font-size: 28px; width: 28px; height: 28px; }
+  }
+}

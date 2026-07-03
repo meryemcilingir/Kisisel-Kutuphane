@@ -1,0 +1,177 @@
+.form-sayfa {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 16px;
+}
+
+.form-kart {
+  background: white; border-radius: 20px; padding: 40px;
+  width: 100%; max-width: 680px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+
+  .form-baslik {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+
+    h1 { margin: 0; font-size: 24px; font-weight: 700; color: #1f2937; }
+    p { margin: 4px 0 0; color: #9ca3af; font-size: 14px; }
+  }
+
+  .geri-btn { background: #f3f4f6 !important; }
+}
+
+.google-arama-bolumu {
+  margin-bottom: 24px;
+
+  .google-aciklama { margin: 0 0 12px; color: #6b7280; font-size: 14px; }
+
+  .google-arama-wrapper {
+    position: relative; display: flex; align-items: center;
+
+    .google-arama-ikon { position: absolute; left: 14px; color: #9ca3af; }
+    .google-arama-input {
+      width: 100%; padding: 14px 16px 14px 44px;
+      border: 2px solid #e5e7eb; border-radius: 12px;
+      font-size: 15px; outline: none; box-sizing: border-box;
+      transition: border-color 0.2s;
+      &:focus { border-color: #764ba2; }
+    }
+    .spinner { position: absolute; right: 14px; }
+  }
+
+  .google-sonuclar {
+    margin-top: 8px; background: white; border-radius: 12px;
+    border: 1px solid #e5e7eb; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+
+    .google-sonuc-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; cursor: pointer; transition: background 0.15s;
+      border-bottom: 1px solid #f3f4f6;
+      &:last-child { border-bottom: none; }
+      &:hover { background: #f5f3ff; }
+
+      .kitap-kapak { width: 40px; height: 56px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+      .kapak-placeholder { width: 40px; height: 56px; background: #f3f4f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+
+      .google-kitap-bilgi {
+        flex: 1; display: flex; flex-direction: column; gap: 2px;
+
+        .google-kitap-ad { font-weight: 600; font-size: 14px; color: #1f2937; }
+        .google-kitap-yazar { font-size: 12px; color: #6b7280; }
+        .google-kitap-sayfa { font-size: 11px; color: #9ca3af; }
+      }
+      .secim-ikon { color: #764ba2; }
+    }
+  }
+
+  .secilen-kitap-onizleme {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 12px; padding: 12px; background: #f0fdf4;
+    border-radius: 10px; border: 1px solid #86efac;
+
+    .onizleme-kapak { width: 32px; height: 44px; object-fit: cover; border-radius: 4px; }
+    span { font-size: 13px; color: #16a34a; font-weight: 600; }
+  }
+
+  .ayrac {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0 0; color: #9ca3af; font-size: 13px;
+
+    &::before, &::after {
+      content: ''; flex: 1; height: 1px; background: #e5e7eb;
+    }
+  }
+}
+
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  margin-bottom: 32px; margin-top: 20px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-grup {
+  display: flex; flex-direction: column; gap: 8px;
+
+  label { font-size: 14px; font-weight: 600; color: #374151; }
+  .zorunlu { color: #ef4444; }
+  .hata-mesaj { color: #ef4444; font-size: 12px; }
+}
+
+.tam-genislik {
+  grid-column: 1 / -1;
+
+  @media (max-width: 600px) {
+    grid-column: 1;
+  }
+}
+
+.input-wrapper {
+  display: flex; align-items: center; gap: 10px;
+  background: #f9fafb; border: 2px solid #e5e7eb;
+  border-radius: 10px; padding: 0 14px; transition: border-color 0.2s;
+  &:focus-within { border-color: #764ba2; background: white; }
+
+  .input-ikon { color: #9ca3af; font-size: 20px; }
+  .ozel-input { flex: 1; border: none; background: transparent; padding: 12px 0; font-size: 15px; color: #1f2937; outline: none; width: 100%; }
+}
+
+.select-wrapper { padding-right: 8px; }
+.ozel-select { flex: 1; border: none; background: transparent; padding: 12px 0; font-size: 15px; color: #1f2937; outline: none; cursor: pointer; width: 100%; }
+
+.yildiz-grup {
+  display: flex; gap: 4px;
+
+  .yildiz-btn {
+    background: none; border: none; font-size: 28px; cursor: pointer;
+    opacity: 0.3; transition: opacity 0.15s, transform 0.15s; padding: 0;
+    &.aktif { opacity: 1; }
+    &:hover { transform: scale(1.2); opacity: 1; }
+  }
+}
+
+.etiket-grup {
+  display: flex; flex-wrap: wrap; gap: 8px;
+
+  .etiket-btn {
+    padding: 6px 16px; border-radius: 20px; border: 2px solid #e5e7eb;
+    background: white; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: #6b7280; transition: all 0.2s;
+    &.secili { border-color: #764ba2; background: #f5f3ff; color: #764ba2; }
+  }
+}
+
+.butonlar {
+  display: flex; justify-content: flex-end; gap: 12px;
+
+  .iptal-btn {
+    display: flex; align-items: center; gap: 6px; padding: 10px 24px;
+    border: 2px solid #e5e7eb; border-radius: 10px; background: white;
+    color: #6b7280; font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
+    &:hover { background: #f3f4f6; }
+  }
+
+  .kaydet-btn {
+    display: flex; align-items: center; gap: 6px; padding: 10px 28px;
+    border: none; border-radius: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s;
+    &:hover { opacity: 0.9; transform: translateY(-1px); }
+    &:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  }
+}
+
+@media (max-width: 600px) {
+  .form-kart { padding: 24px 16px; }
+}
+.karakter-sayac {
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: 4px;
+}

@@ -1,0 +1,524 @@
+﻿<div class="sayfa">
+
+  <!-- Hero -->
+  <div class="ust-satir">
+    <div class="hero">
+      <div class="hero-ust">
+        <div class="hero-icerik">
+          <h1>Kütüphanem</h1>
+          <p>Okuma yolculuğuna devam et</p>
+        </div>
+        <div class="hero-istatistikler">
+          <div class="hero-istat">
+            <mat-icon>menu_book</mat-icon>
+            <div>
+              <span class="hero-istat-sayi">{{ booksService.kitaplar().length }}</span>
+              <span class="hero-istat-etiket">Toplam Kitap</span>
+            </div>
+          </div>
+          <div class="hero-istat">
+            <mat-icon>check_circle</mat-icon>
+            <div>
+              <span class="hero-istat-sayi">{{ tumOkundu() }}</span>
+              <span class="hero-istat-etiket">Okundu</span>
+            </div>
+          </div>
+          <div class="hero-istat">
+            <mat-icon>auto_stories</mat-icon>
+            <div>
+              <span class="hero-istat-sayi">{{ tumOkunuyor() }}</span>
+              <span class="hero-istat-etiket">Okunuyor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-flat-button routerLink="/kitaplar/ekle" class="ekle-btn">
+        <mat-icon>add</mat-icon> Kitap Ekle
+      </button>
+    </div>
+
+    @if (suAnOkunan()) {
+      <div class="su-an-okunan-kart">
+        <div class="su-an-sol">
+          @if (suAnOkunan()!.kapak) {
+            <img [src]="suAnOkunan()!.kapak" class="su-an-kapak">
+          } @else {
+            <div class="su-an-kapak-placeholder"></div>
+          }
+          <div class="su-an-bilgi">
+            <span class="su-an-etiket">Şu An Okuyorsun</span>
+            <span class="su-an-ad">{{ suAnOkunan()!.ad }}</span>
+            <span class="su-an-yazar">{{ suAnOkunan()!.yazar }}</span>
+          </div>
+        </div>
+        <div class="su-an-sag">
+          <div class="ilerleme-bilgi">
+            <span class="ilerleme-metin">
+              {{ suAnOkunan()!.mevcutSayfa ?? 0 }} / {{ suAnOkunan()!.sayfaSayisi ?? '?' }} sayfa
+            </span>
+            <span class="ilerleme-yuzde-kucuk">%{{ okumayuzdesi() }}</span>
+          </div>
+          <div class="su-an-ilerleme-bar">
+            <div class="su-an-ilerleme-dolu" [style.width.%]="okumayuzdesi()"></div>
+          </div>
+          <div class="sayfa-guncelle">
+            <input type="number" class="sayfa-input"
+              [value]="suAnOkunan()!.mevcutSayfa ?? 0"
+              (change)="sayfaGuncelle(suAnOkunan()!.id, $any($event.target).value)"
+              placeholder="Mevcut sayfa">
+            <span class="sayfa-label">sayfadasın</span>
+          </div>
+        </div>
+        @if (suAnOkunanListesi().length > 1) {
+          <div class="su-an-carousel">
+            <button class="su-an-ok" (click)="suAnOnceki()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="su-an-sayac">{{ suAnOkunanIndex() + 1 }} / {{ suAnOkunanListesi().length }}</span>
+            <button class="su-an-ok" (click)="suAnSonraki()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="su-an-bos">
+        <mat-icon>auto_stories</mat-icon>
+        <p>Şu an okuduğun bir kitap yok</p>
+      </div>
+    }
+  </div>
+
+  <!-- Karşılama + Okuma Hedefi -->
+  <div class="ikinci-satir">
+    <div class="karsilama-kart">
+      <div class="karsilama-sol">
+        <div>
+          <h2>Hoşgeldin!</h2>
+          <p>Bugün toplam <strong>{{ bugunOkunan() }}</strong> sayfa okudun</p>
+        </div>
+      </div>
+      @if (streak() > 0) {
+        <div class="streak-rozet">
+          <div>
+            <span class="streak-sayi">{{ streak() }}</span>
+            <span class="streak-etiket">gün streak</span>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="hedef-kart">
+      <div class="hedef-sol">
+        <div>
+          <h3>{{ hedef().yil }} Yılı Okuma Hedefi</h3>
+          <p>{{ tumOkundu() }} / {{ hedef().hedef }} kitap okundu</p>
+        </div>
+      </div>
+      <div class="hedef-sag">
+        @if (hedefDuzenle()) {
+          <div class="hedef-duzenle">
+            <input type="number" [value]="yeniHedef()"
+              (input)="yeniHedef.set(+$any($event.target).value)"
+              class="hedef-input" min="1" max="365">
+            <button class="kaydet-hedef-btn" (click)="hedefKaydet()">Kaydet</button>
+            <button class="iptal-hedef-btn" (click)="hedefDuzenle.set(false)">İptal</button>
+          </div>
+        } @else {
+          <button class="duzenle-hedef-btn" (click)="hedefDuzenle.set(true); yeniHedef.set(hedef().hedef)">
+            Hedefi Düzenle
+          </button>
+        }
+        <div class="json-butonlar">
+          <button class="json-btn" (click)="jsonAktar()">Dışa Aktar</button>
+          <label class="json-btn">
+            İçe Aktar
+            <input type="file" accept=".json" style="display:none" (change)="jsonIcerAktar($event)">
+          </label>
+        </div>
+      </div>
+      <div class="ilerleme-bar">
+        <div class="ilerleme-dolu" [style.width.%]="hedefYuzde()"></div>
+      </div>
+      <span class="ilerleme-yuzde">%{{ hedefYuzde() }}</span>
+    </div>
+  </div>
+
+  <!-- Arama + Filtre -->
+  <div class="arama-filtre-bar">
+    <div class="arama-wrapper">
+      <mat-icon class="arama-ikon">search</mat-icon>
+      <input class="arama-input"
+        [value]="aramaMetni()"
+        (input)="aramaGuncelle($any($event.target).value)"
+        placeholder="Kitap adı veya yazar ara..."
+        (focus)="oneriGoster.set(true)"
+        (blur)="onBlur()"
+        autocomplete="off"
+        maxlength="200">
+      @if (oneriGoster() && onerilenKitaplar().length > 0) {
+        <div class="oneri-listesi">
+          @for (kitap of onerilenKitaplar(); track kitap.id) {
+            <div class="oneri-item" (mousedown)="kitapSec(kitap)">
+              <div class="oneri-bilgi">
+                <span class="oneri-ad">{{ kitap.ad }}</span>
+                <span class="oneri-yazar">{{ kitap.yazar }}</span>
+              </div>
+              <span class="oneri-tur">{{ kitap.tur || '-' }}</span>
+              <span class="oneri-durum" [durumRozet]="kitap.durum">{{ kitap.durum | durumEtiket }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <button class="filtre-ac-btn" (click)="filtrePaneli.set(!filtrePaneli())">
+      <mat-icon>tune</mat-icon>
+      Filtrele
+      @if (aktifFiltreSayisi() > 0) {
+        <span class="aktif-filtre-badge">{{ aktifFiltreSayisi() }}</span>
+      }
+    </button>
+
+    <div class="sirala-wrapper">
+      <button class="filtre-ac-btn" (click)="siralamaPaneli.set(!siralamaPaneli())">
+        <mat-icon>sort</mat-icon>
+        Sırala
+      </button>
+      @if (siralamaPaneli()) {
+        <div class="sirala-dropdown">
+          <button class="sirala-secenek" [class.secili]="siralama() === 'tarih-yeni'" (click)="siralamaSec('tarih-yeni')">
+            <mat-icon>schedule</mat-icon> En Yeni Eklenen
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'tarih-eski'" (click)="siralamaSec('tarih-eski')">
+            <mat-icon>history</mat-icon> En Eski Eklenen
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'puan-yuksek'" (click)="siralamaSec('puan-yuksek')">
+            <mat-icon>star</mat-icon> Puan (Yüksek-Düşük)
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'puan-dusuk'" (click)="siralamaSec('puan-dusuk')">
+            <mat-icon>star_border</mat-icon> Puan (Düşük-Yüksek)
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'ad-az'" (click)="siralamaSec('ad-az')">
+            <mat-icon>sort_by_alpha</mat-icon> İsim (A-Z)
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'ad-za'" (click)="siralamaSec('ad-za')">
+            <mat-icon>sort_by_alpha</mat-icon> İsim (Z-A)
+          </button>
+          <button class="sirala-secenek" [class.secili]="siralama() === 'sayfa-cok'" (click)="siralamaSec('sayfa-cok')">
+            <mat-icon>menu_book</mat-icon> Sayfa Sayısı (Çok-Az)
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (aktifFiltreSayisi() > 0) {
+      <button class="filtre-temizle-btn" (click)="filtreleriTemizle()">
+        <mat-icon>close</mat-icon> Temizle
+      </button>
+    }
+  </div>
+
+  <!-- Aktif Filtre Etiketleri -->
+  @if (aktifFiltreSayisi() > 0) {
+    <div class="aktif-filtreler">
+      @if (secilenTur()) {
+        <span class="aktif-filtre-pill">{{ secilenTur() }}<button (click)="secilenTur.set('')">×</button></span>
+      }
+      @if (secilenEtiket()) {
+        <span class="aktif-filtre-pill">{{ secilenEtiket() }}<button (click)="secilenEtiket.set('')">×</button></span>
+      }
+      @if (secilenYazar()) {
+        <span class="aktif-filtre-pill">{{ secilenYazar() }}<button (click)="secilenYazar.set('')">×</button></span>
+      }
+      @if (minPuan() > 0) {
+        <span class="aktif-filtre-pill">{{ minPuan() }}+ yıldız<button (click)="minPuan.set(0)">×</button></span>
+      }
+      @if (tarihFiltresi() !== 'tumu') {
+        <span class="aktif-filtre-pill">{{ tarihEtiket() }}<button (click)="tarihFiltresi.set('tumu')">×</button></span>
+      }
+      @if (sayfaFiltresi() !== 'tumu') {
+        <span class="aktif-filtre-pill">{{ sayfaEtiket() }}<button (click)="sayfaFiltresi.set('tumu')">×</button></span>
+      }
+      <span class="filtre-sonuc">{{ toplamFiltrelenen() }} kitap bulundu</span>
+    </div>
+  }
+
+  <!-- Filtre Paneli -->
+  @if (filtrePaneli()) {
+    <div class="filtre-panel">
+      <div class="filtre-grid">
+        <div class="filtre-grup">
+          <label>Türe Göre</label>
+          <div class="filtre-secenekler">
+            <button class="filtre-chip" [class.secili]="secilenTur() === ''" (click)="secilenTur.set('')">Tümü</button>
+            @for (tur of turSecenekleri; track tur) {
+              <button class="filtre-chip" [class.secili]="secilenTur() === tur" (click)="secilenTur.set(tur)">{{ tur }}</button>
+            }
+          </div>
+        </div>
+
+        <div class="filtre-grup">
+          <label>Yazara Göre</label>
+          <div class="yazar-arama-wrapper">
+            <input class="yazar-arama-input"
+              [value]="secilenYazar()"
+              (input)="secilenYazar.set($any($event.target).value)"
+              placeholder="Yazar adı yaz..."
+              list="yazar-listesi"
+              maxlength="150">
+            <datalist id="yazar-listesi">
+              @for (yazar of yazarListesi(); track yazar) {
+                <option [value]="yazar">{{ yazar }}</option>
+              }
+            </datalist>
+            @if (secilenYazar()) {
+              <button class="yazar-temizle" (click)="secilenYazar.set('')">×</button>
+            }
+          </div>
+        </div>
+
+        <div class="filtre-grup">
+          <label>Etikete Göre</label>
+          <div class="filtre-secenekler">
+            <button class="filtre-chip" [class.secili]="secilenEtiket() === ''" (click)="secilenEtiket.set('')">Tümü</button>
+            @for (etiket of etiketSecenekleri; track etiket) {
+              <button class="filtre-chip" [class.secili]="secilenEtiket() === etiket" (click)="secilenEtiket.set(etiket)">{{ etiket }}</button>
+            }
+          </div>
+        </div>
+
+        <div class="filtre-grup">
+          <label>Minimum Puan</label>
+          <div class="filtre-secenekler">
+            <button class="filtre-chip" [class.secili]="minPuan() === 0" (click)="minPuan.set(0)">Tümü</button>
+            @for (p of [1,2,3,4,5]; track p) {
+              <button class="filtre-chip" [class.secili]="minPuan() === p" (click)="minPuan.set(p)">
+                @for (y of yildizlar(p); track y) { ★ }
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="filtre-grup">
+          <label>Eklenme Tarihi</label>
+          <div class="filtre-secenekler">
+            <button class="filtre-chip" [class.secili]="tarihFiltresi() === 'tumu'" (click)="tarihFiltresi.set('tumu')">Tümü</button>
+            <button class="filtre-chip" [class.secili]="tarihFiltresi() === 'bugun'" (click)="tarihFiltresi.set('bugun')">Bugün</button>
+            <button class="filtre-chip" [class.secili]="tarihFiltresi() === 'bu-hafta'" (click)="tarihFiltresi.set('bu-hafta')">Bu Hafta</button>
+            <button class="filtre-chip" [class.secili]="tarihFiltresi() === 'bu-ay'" (click)="tarihFiltresi.set('bu-ay')">Bu Ay</button>
+            <button class="filtre-chip" [class.secili]="tarihFiltresi() === 'bu-yil'" (click)="tarihFiltresi.set('bu-yil')">Bu Yıl</button>
+          </div>
+        </div>
+
+        <div class="filtre-grup">
+          <label>Sayfa Sayısı</label>
+          <div class="filtre-secenekler">
+            <button class="filtre-chip" [class.secili]="sayfaFiltresi() === 'tumu'" (click)="sayfaFiltresi.set('tumu')">Tümü</button>
+            <button class="filtre-chip" [class.secili]="sayfaFiltresi() === 'kisa'" (click)="sayfaFiltresi.set('kisa')">200'den az</button>
+            <button class="filtre-chip" [class.secili]="sayfaFiltresi() === 'orta'" (click)="sayfaFiltresi.set('orta')">200-400</button>
+            <button class="filtre-chip" [class.secili]="sayfaFiltresi() === 'uzun'" (click)="sayfaFiltresi.set('uzun')">400'den fazla</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Sayfalama -->
+  @if (toplamSayfa() > 0) {
+    <div class="paging-wrapper">
+      <div class="paging-sol">
+        <span class="paging-bilgi">{{ tumKitaplar().length }} kitap</span>
+      </div>
+      <div class="paging-kontroller">
+        <button class="paging-btn" (click)="sayfaDegistir(1)" [disabled]="mevcutSayfa() === 1"><mat-icon>first_page</mat-icon></button>
+        <button class="paging-btn" (click)="sayfaDegistir(mevcutSayfa() - 1)" [disabled]="mevcutSayfa() === 1"><mat-icon>chevron_left</mat-icon></button>
+        @for (sayfa of sayfaListesi(); track sayfa) {
+          @if (sayfa === '...') {
+            <span class="paging-nokta">...</span>
+          } @else {
+            <button class="paging-btn paging-numara" [class.aktif]="sayfa === mevcutSayfa()" (click)="sayfaDegistir(+sayfa)">{{ sayfa }}</button>
+          }
+        }
+        <button class="paging-btn" (click)="sayfaDegistir(mevcutSayfa() + 1)" [disabled]="mevcutSayfa() === toplamSayfa()"><mat-icon>chevron_right</mat-icon></button>
+        <button class="paging-btn" (click)="sayfaDegistir(toplamSayfa())" [disabled]="mevcutSayfa() === toplamSayfa()"><mat-icon>last_page</mat-icon></button>
+      </div>
+      <div class="paging-sag">
+        <span class="paging-boyut-label">Sayfa başına:</span>
+        @for (sayi of [10, 20, 50]; track sayi) {
+          <button class="paging-boyut-btn" [class.aktif]="sayfaBasinaKitap() === sayi" (click)="sayfaBasinaKitapDegistir(sayi)">{{ sayi }}</button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Kanban / Liste -->
+  @if (booksService.kitaplar().length === 0) {
+    <app-empty-state />
+  } @else if (aktifDurumFiltresi() !== '') {
+    <div class="liste-grid">
+      @for (kitap of sayfaliKitaplar(); track kitap.id) {
+        <div class="surukle-kart">
+          <ng-container *ngTemplateOutlet="kitapKarti; context: { kitap }"></ng-container>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="kanban-board">
+      <div class="kanban-sutun">
+        <div class="sutun-baslik okunacak-baslik">
+          <span>Okunacak</span>
+          <span class="sutun-sayi">{{ okunacaklar().length }}</span>
+        </div>
+        <div class="kart-listesi" cdkDropList id="okunacak"
+          [cdkDropListData]="okunacaklar()"
+          [cdkDropListConnectedTo]="['okunuyor', 'okundu']"
+          (cdkDropListDropped)="birakma($event)">
+          @for (kitap of okunacaklar(); track kitap.id) {
+            <div cdkDrag class="surukle-kart">
+              <div class="surukle-tutamac" cdkDragHandle><mat-icon>drag_indicator</mat-icon></div>
+              <ng-container *ngTemplateOutlet="kitapKarti; context: { kitap }"></ng-container>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="kanban-sutun">
+        <div class="sutun-baslik okunuyor-baslik">
+          <span>Okunuyor</span>
+          <span class="sutun-sayi">{{ okunanlar().length }}</span>
+        </div>
+        <div class="kart-listesi" cdkDropList id="okunuyor"
+          [cdkDropListData]="okunanlar()"
+          [cdkDropListConnectedTo]="['okunacak', 'okundu']"
+          (cdkDropListDropped)="birakma($event)">
+          @for (kitap of okunanlar(); track kitap.id) {
+            <div cdkDrag class="surukle-kart">
+              <div class="surukle-tutamac" cdkDragHandle><mat-icon>drag_indicator</mat-icon></div>
+              <ng-container *ngTemplateOutlet="kitapKarti; context: { kitap }"></ng-container>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="kanban-sutun">
+        <div class="sutun-baslik okundu-baslik">
+          <span>Okundu</span>
+          <span class="sutun-sayi">{{ okunanlarBitti().length }}</span>
+        </div>
+        <div class="kart-listesi" cdkDropList id="okundu"
+          [cdkDropListData]="okunanlarBitti()"
+          [cdkDropListConnectedTo]="['okunacak', 'okunuyor']"
+          (cdkDropListDropped)="birakma($event)">
+          @for (kitap of okunanlarBitti(); track kitap.id) {
+            <div cdkDrag class="surukle-kart">
+              <div class="surukle-tutamac" cdkDragHandle><mat-icon>drag_indicator</mat-icon></div>
+              <ng-container *ngTemplateOutlet="kitapKarti; context: { kitap }"></ng-container>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Kitap Bitti Değerlendirme -->
+  @if (degerlendirmeKitabi(); as kitap) {
+    <div class="degerlendirme-overlay" (click)="degerlendirmeKapat()">
+      <div class="degerlendirme-modal" (click)="$event.stopPropagation()">
+        <h2>Tebrikler, bitirdin!</h2>
+        <p class="degerlendirme-kitap-ad">{{ kitap.ad }}</p>
+        <p class="degerlendirme-soru">Bu kitabı nasıl buldun?</p>
+        <div class="degerlendirme-yildizlar">
+          @for (y of [1,2,3,4,5]; track y) {
+            <button class="degerlendirme-yildiz-btn"
+              [class.aktif]="(degerlendirmePuan() ?? 0) >= y"
+              (click)="degerlendirmePuan.set(y)">★</button>
+          }
+        </div>
+        <textarea class="degerlendirme-not"
+          [(ngModel)]="degerlendirmeNot"
+          rows="3"
+          placeholder="Bu kitap hakkında ne düşünüyorsun? (opsiyonel)"
+          maxlength="500"></textarea>
+        <div class="degerlendirme-karakter-sayac">{{ degerlendirmeNot.length }} / 500</div>
+        <div class="degerlendirme-butonlar">
+          <button class="degerlendirme-gecistir" (click)="degerlendirmeKapat()">Şimdi değil</button>
+          <button class="degerlendirme-kaydet-btn" (click)="degerlendirmeKaydet()">Kaydet</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- Kitap Kartı Template -->
+<ng-template #kitapKarti let-kitap="kitap">
+  <mat-card class="kitap-kart" (click)="detayAc(kitap)" style="cursor:pointer">
+    <mat-card-content class="kart-icerik">
+      <div class="kart-ust">
+        @if (kitap.kapak) {
+          <img [src]="kitap.kapak" [alt]="kitap.ad" class="kitap-kapak-resim">
+        } @else {
+         <div class="kapak-yok">
+  <mat-icon>menu_book</mat-icon>
+</div>
+        }
+        <div class="kart-bilgi">
+          <span class="kart-tur-etiketi" [durumRozet]="kitap.durum">{{ kitap.durum | durumEtiket }}</span>
+          <h3 class="kitap-adi">{{ kitap.ad }}</h3>
+          <p class="yazar">{{ kitap.yazar }}</p>
+
+          @if (kitap.puan) {
+            <span class="puan-yildiz">
+              @for (y of [1,2,3,4,5]; track y) {
+                <span [class.dolu]="y <= kitap.puan">★</span>
+              }
+            </span>
+          }
+
+          @if (kitap.tur) {
+            <span class="tur-etiketi">{{ kitap.tur }}</span>
+          }
+        </div>
+        <div class="kart-islemler">
+          <button mat-icon-button
+            [routerLink]="['/kitaplar', kitap.id, 'duzenle']"
+            (click)="$event.stopPropagation()" matTooltip="Düzenle">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn"
+            (click)="$event.stopPropagation(); kitapSil(kitap.id, kitap.ad)"
+            matTooltip="Sil">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (kitap.etiketler && kitap.etiketler.length > 0) {
+        <div class="etiket-listesi">
+          @for (etiket of kitap.etiketler; track etiket) {
+            <span class="etiket-pill">{{ etiket }}</span>
+          }
+        </div>
+      }
+
+      @if (kitap.sayfaSayisi) {
+        <div class="okuma-ilerleme">
+          <div class="okuma-ilerleme-ust">
+            <span class="okuma-ilerleme-metin">
+              {{ kitap.mevcutSayfa ?? 0 }} / {{ kitap.sayfaSayisi }} sayfa
+            </span>
+            <span class="okuma-ilerleme-yuzde">%{{ kartIlerlemeYuzdesi(kitap) }}</span>
+          </div>
+          <div class="okuma-ilerleme-bar">
+            <div class="okuma-ilerleme-dolu" [style.width.%]="kartIlerlemeYuzdesi(kitap)"></div>
+          </div>
+        </div>
+      }
+
+      @if (kitap.not) {
+        <p class="kitap-not">"{{ kitap.not }}"</p>
+      }
+    </mat-card-content>
+  </mat-card>
+</ng-template>

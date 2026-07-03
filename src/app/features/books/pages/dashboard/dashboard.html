@@ -1,0 +1,128 @@
+﻿<div class="sayfa">
+  <div class="baslik-satiri">
+    <button mat-icon-button routerLink="/kitaplar">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>İstatistikler</h1>
+  </div>
+
+  <!-- Özet Kartlar -->
+  <div class="ozet-grid">
+    <div class="ozet-kart mor">
+      <mat-icon>menu_book</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ toplamKitap() }}</span>
+        <span class="ozet-etiket">Toplam Kitap</span>
+      </div>
+    </div>
+    <div class="ozet-kart yesil">
+      <mat-icon>check_circle</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ toplamOkundu() }}</span>
+        <span class="ozet-etiket">Okunan Kitap</span>
+      </div>
+    </div>
+    <div class="ozet-kart mavi">
+      <mat-icon>star</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ ortalamaPuan() }}</span>
+        <span class="ozet-etiket">Ortalama Puan</span>
+      </div>
+    </div>
+    <div class="ozet-kart turuncu">
+      <mat-icon>import_contacts</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ toplamSayfa() }}</span>
+        <span class="ozet-etiket">Toplam Sayfa</span>
+      </div>
+    </div>
+    <div class="ozet-kart pembe">
+      <mat-icon>people</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ toplamYazar() }}</span>
+        <span class="ozet-etiket">Farklı Yazar</span>
+      </div>
+    </div>
+    <div class="ozet-kart acik-mavi">
+      <mat-icon>category</mat-icon>
+      <div>
+        <span class="ozet-sayi">{{ toplamTur() }}</span>
+        <span class="ozet-etiket">Farklı Tür</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grafik-grid">
+    <!-- Pasta Grafik -->
+    <mat-card class="grafik-kart">
+      <mat-card-content>
+        <h2>Türlere Göre Dağılım</h2>
+        @if ((turDagilimi().labels?.length ?? 0) > 0) {
+          <div class="grafik-container">
+            <canvas baseChart
+              [data]="turDagilimi()"
+              [options]="pieOptions"
+              type="pie">
+            </canvas>
+          </div>
+        } @else {
+          <div class="bos-grafik">Henüz yeterli veri yok</div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Çubuk Grafik -->
+    <mat-card class="grafik-kart">
+      <mat-card-content>
+        <h2>Aylık Okunan Kitaplar</h2>
+        @if (aylikOkuma().datasets[0].data.length > 0) {
+          <div class="grafik-container">
+            <canvas baseChart
+              [data]="aylikOkuma()"
+              [options]="barOptions"
+              type="bar">
+            </canvas>
+          </div>
+        } @else {
+          <div class="bos-grafik">Henüz yeterli veri yok</div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Durum Dağılımı -->
+    <mat-card class="grafik-kart">
+      <mat-card-content>
+        <h2>Okuma Durumu Dağılımı</h2>
+        <div class="grafik-container">
+          <canvas baseChart
+            [data]="durumDagilimi()"
+            [options]="pieOptions"
+            type="doughnut">
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- En Çok Okunan Yazarlar -->
+    <mat-card class="grafik-kart">
+      <mat-card-content>
+        <h2>En Çok Okunan Yazarlar</h2>
+        @if (enCokOkunanYazarlar().length > 0) {
+          <div class="yazar-listesi">
+            @for (yazar of enCokOkunanYazarlar(); track yazar.ad) {
+              <div class="yazar-satiri">
+                <span class="yazar-ad">{{ yazar.ad }}</span>
+                <div class="yazar-bar-wrapper">
+                  <div class="yazar-bar" [style.width.%]="yazar.yuzde"></div>
+                </div>
+                <span class="yazar-sayi">{{ yazar.sayi }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="bos-grafik">Henüz yeterli veri yok</div>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

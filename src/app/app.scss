@@ -1,0 +1,153 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #1a1f2e;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  z-index: 199;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+
+  &.acik {
+    transform: translateX(0);
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    .logo-ikon { color: #c9a84c; font-size: 28px; width: 28px; height: 28px; }
+    .logo-yazi { color: white; font-size: 18px; font-weight: 700; letter-spacing: 0.3px; }
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .nav-baslik {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 1.5px;
+      padding: 16px 16px 6px;
+      margin: 0;
+    }
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+    &:hover { background: rgba(255,255,255,0.08); color: white; }
+
+    &.aktif {
+      background: rgba(201,168,76,0.15);
+      color: #c9a84c;
+
+      mat-icon { color: #c9a84c; }
+      .nav-sayi { background: rgba(201,168,76,0.2); color: #c9a84c; }
+    }
+
+    .nav-sayi {
+      margin-left: auto;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  }
+
+  .sidebar-alt {
+    padding: 16px 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    .dark-toggle-sidebar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+      &:hover { background: rgba(255,255,255,0.08); color: white; }
+    }
+  }
+}
+
+.ana-icerik {
+  margin-left: 0;
+  flex: 1;
+  min-height: 100vh;
+  background: #f0ede8;
+  padding-top: 70px;
+  width: 100%;
+  overflow-x: hidden;
+  transition: margin-left 0.3s ease, filter 0.3s ease;
+}
+
+.hamburger-btn {
+  display: flex;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  background: #1a1f2e;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+}
+.sidebar-acik-icerik {
+  margin-left: 240px;
+  filter: brightness(0.7);
+  pointer-events: none;
+}

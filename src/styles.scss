@@ -1,1 +1,141 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import 'material-icons/iconfont/material-icons.css';
+
+* {
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+html, body { height: 100%; margin: 0; }
+body { font-family: Roboto, sans-serif; background: #f0ede8; }
+
+:root {
+  --sidebar-bg: #1a1f2e;
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+  --accent: #c9a84c;
+  --accent-light: #f5e6c0;
+  --text-primary: #1a1f2e;
+  --text-secondary: #6b7280;
+  --bg-main: #f0ede8;
+  --card-bg: #ffffff;
+}
+
+.su-an-kapak {
+  border: 2px solid rgba(255,255,255,0.15) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
+.paging-wrapper {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 16px; padding: 10px 16px;
+  background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 2px solid #e5e7eb;
+}
+
+.paging-sol { display: flex; align-items: center; }
+.paging-bilgi { font-size: 13px; color: #6b7280; font-weight: 500; }
+.paging-kontroller { display: flex; align-items: center; gap: 4px; }
+
+.paging-btn {
+  width: 32px; height: 32px; border: 1.5px solid #e5e7eb; border-radius: 8px;
+  background: white; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all 0.2s; color: #374151;
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  &:hover:not([disabled]) { border-color: #c9a84c; color: #c9a84c; }
+  &[disabled] { opacity: 0.4; cursor: not-allowed; }
+  &.paging-numara { font-size: 12px; font-weight: 600; width: 32px; }
+  &.paging-numara.aktif { background: #c9a84c; border-color: #c9a84c; color: #1a1f2e; }
+}
+
+.paging-nokta { padding: 0 4px; color: #9ca3af; font-size: 13px; }
+.paging-sag { display: flex; align-items: center; gap: 6px; }
+.paging-boyut-label { font-size: 12px; color: #6b7280; }
+
+.paging-boyut-btn {
+  padding: 4px 10px; border: 1.5px solid #e5e7eb; border-radius: 8px;
+  background: white; cursor: pointer; font-size: 12px; font-weight: 600;
+  color: #374151; transition: all 0.2s;
+  &:hover { border-color: #c9a84c; }
+  &.aktif { background: #c9a84c; border-color: #c9a84c; color: #1a1f2e; }
+}
+
+@media (max-width: 600px) {
+  .paging-wrapper { justify-content: center; }
+  .paging-sol { display: none; }
+}
+
+body.dark-mode {
+  --bg-main: #060b14;
+  --card-bg: #0d1424;
+  --card-border: #1e2d45;
+  --text-primary: #e2e8f0;
+  --text-secondary: #64748b;
+
+  background: var(--bg-main);
+  color: var(--text-primary);
+
+  .ana-icerik { background: #060b14 !important; }
+  .sayfa { background: #060b14 !important; }
+
+  .hero { background: linear-gradient(135deg, #4a3500, #6b5200) !important; }
+  .su-an-okunan-kart { background: linear-gradient(135deg, #4a3500, #6b5200) !important; }
+  .su-an-bos { background: linear-gradient(135deg, #4a3500, #6b5200) !important; }
+
+  .kitap-kart { background: #0d1424 !important; border-color: #1e2d45 !important; }
+  .kitap-adi { color: #e2e8f0 !important; }
+  .yazar { color: #64748b !important; }
+  .kitap-not { color: #64748b !important; border-color: #1e2d45 !important; }
+
+  .kanban-sutun { background: #0d1424 !important; }
+  .kart-listesi { background: #0d1424 !important; }
+
+  .arama-input { background: #0d1424 !important; border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+  .filtre-ac-btn { background: #0d1424 !important; border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+  .filtre-panel { background: #0d1424 !important; }
+  .filtre-chip { background: #0d1424 !important; border-color: #1e2d45 !important; color: #64748b !important; }
+  .filtre-chip.secili { background: #4c1d95 !important; border-color: #7c3aed !important; color: #e9d5ff !important; }
+  .oneri-listesi { background: #0d1424 !important; border-color: #1e2d45 !important; }
+  .oneri-item:hover { background: #1e2d45 !important; }
+  .oneri-ad { color: #e2e8f0 !important; }
+  .sirala-dropdown { background: #0d1424 !important; border-color: #1e2d45 !important; }
+  .sirala-secenek { color: #e2e8f0 !important; &:hover { background: #1e2d45 !important; } }
+
+  .hedef-kart { background: #0d1424 !important; }
+  .hedef-sol h3 { color: #e2e8f0 !important; }
+  .hedef-sol p { color: #64748b !important; }
+  .ilerleme-yuzde { color: #64748b !important; }
+  .karsilama-kart { background: #0d1424 !important; }
+  .karsilama-kart h2 { color: #e2e8f0 !important; }
+  .karsilama-kart p { color: #64748b !important; }
+  .streak-rozet { background: #1a1f2e !important; border-color: #2d3548 !important; }
+
+  .json-btn { background: #1e2d45 !important; color: #e2e8f0 !important; }
+  .duzenle-hedef-btn { background: transparent !important; }
+
+  .tur-etiketi { background: #1e2d45 !important; color: #64748b !important; }
+  .etiket-pill { background: #1e2d45 !important; color: #c9a84c !important; }
+
+  .empty-state { background: #0d1424 !important; }
+  .empty-state h3 { color: #e2e8f0 !important; }
+
+  .grafik-kart { background: #0d1424 !important; }
+  .grafik-kart h2 { color: #e2e8f0 !important; }
+  .yazar-ad { color: #e2e8f0 !important; }
+  .bos-grafik { color: #64748b !important; }
+  .baslik-satiri h1 { color: #e2e8f0 !important; }
+
+  .mat-mdc-card { background: #0d1424 !important; }
+  .mdc-dialog__surface { background: #0d1424 !important; }
+
+  .filtre-grup label { color: #64748b !important; }
+  .yazar-arama-input { background: #0d1424 !important; border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+  .aktif-filtre-pill { background: #1e2d45 !important; }
+  .filtre-sonuc { color: #64748b !important; }
+
+  .paging-wrapper { background: #0d1424 !important; border-color: #1e2d45 !important; }
+  .paging-btn { background: #0d1424 !important; border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+  .paging-boyut-btn { background: #0d1424 !important; border-color: #1e2d45 !important; color: #e2e8f0 !important; }
+  .paging-bilgi { color: #64748b !important; }
+  .paging-boyut-label { color: #64748b !important; }
+}

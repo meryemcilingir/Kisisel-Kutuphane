@@ -1,0 +1,86 @@
+.modal-ust {
+  padding: 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.15));
+  }
+
+  .modal-ust-icerik {
+    position: relative;
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+    padding: 24px;
+
+    .modal-kapak {
+      width: 84px; height: 118px; object-fit: cover;
+      border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+    .modal-kapak-yok {
+  width: 100px; height: 140px;
+  background: linear-gradient(135deg, #c9a84c, #a07830);
+  border-radius: 10px; display: flex;
+  align-items: center; justify-content: center;
+  mat-icon { color: rgba(255,255,255,0.8); font-size: 40px; width: 40px; height: 40px; }
+}
+
+    .modal-baslik-bilgi {
+      display: flex; flex-direction: column; gap: 4px; padding-bottom: 4px;
+
+      .durum-yazi { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; opacity: 0.95; }
+      h2 { margin: 2px 0 0; font-size: 21px; font-weight: 700; color: white; line-height: 1.25; }
+      .modal-yazar { margin: 0; font-size: 13px; opacity: 0.85; }
+      .modal-yildiz {
+        font-size: 15px; letter-spacing: 1px; margin-top: 2px;
+
+        span {
+          color: rgba(255,255,255,0.35);
+          &.dolu { color: #ffd866; }
+        }
+      }
+    }
+  }
+}
+
+.modal-icerik { padding: 16px 24px !important; }
+
+.bilgi-satiri {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid #f3f4f6;
+
+  mat-icon { color: #9ca3af; margin-top: 2px; }
+  div { display: flex; flex-direction: column; gap: 2px; }
+
+  &.aciklama-satiri {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .aciklama-baslik { display: flex; align-items: center; gap: 12px; }
+    .aciklama-metin { margin: 8px 0 0 36px; font-size: 13px; color: #4b5563; line-height: 1.6; }
+  }
+}
+
+.etiket { font-size: 12px; color: #9ca3af; }
+.deger { font-size: 15px; color: #1f2937; font-weight: 500; }
+
+.modal-etiketler {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+
+  .modal-etiket-pill { background: #fdf8ec; color: #a07830; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+}
+
+.not-kutusu {
+  display: flex; gap: 12px; margin-top: 16px;
+  padding: 14px; background: #f9fafb;
+  border-radius: 10px; border-left: 3px solid #c9a84c;
+
+  mat-icon { color: #c9a84c; flex-shrink: 0; }
+  p { margin: 0; font-style: italic; color: #4b5563; font-size: 14px; line-height: 1.6; }
+}

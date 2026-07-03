@@ -1,0 +1,106 @@
+﻿<div class="modal-ust" [durumRozet]="data.durum">
+  <div class="modal-ust-icerik">
+    @if (data.kapak) {
+      <img [src]="data.kapak" [alt]="data.ad" class="modal-kapak">
+    } @else {
+      <div class="kapak-yok">
+  <mat-icon>menu_book</mat-icon>
+</div>
+    }
+    <div class="modal-baslik-bilgi">
+      <span class="durum-yazi">{{ data.durum | durumEtiket }}</span>
+      <h2 mat-dialog-title>{{ data.ad }}</h2>
+      <p class="modal-yazar">{{ data.yazar }}</p>
+      @if (data.puan) {
+        <span class="modal-yildiz">
+          @for (y of [1,2,3,4,5]; track y) {
+            <span [class.dolu]="y <= data.puan">★</span>
+          }
+        </span>
+      }
+    </div>
+  </div>
+</div>
+
+<mat-dialog-content class="modal-icerik">
+  @if (data.aciklama) {
+    <div class="bilgi-satiri aciklama-satiri">
+      <div class="aciklama-baslik">
+        <mat-icon>description</mat-icon>
+        <span class="etiket">Kitap Hakkında</span>
+      </div>
+      <p class="aciklama-metin">{{ data.aciklama }}</p>
+    </div>
+  }
+  @if (data.tur) {
+    <div class="bilgi-satiri">
+      <mat-icon>category</mat-icon>
+      <div>
+        <span class="etiket">Tür</span>
+        <span class="deger">{{ data.tur }}</span>
+      </div>
+    </div>
+  }
+
+  @if (data.sayfaSayisi) {
+    <div class="bilgi-satiri">
+      <mat-icon>menu_book</mat-icon>
+      <div>
+        <span class="etiket">İlerleme</span>
+        <span class="deger">{{ data.mevcutSayfa ?? 0 }} / {{ data.sayfaSayisi }} sayfa</span>
+      </div>
+    </div>
+  }
+
+  @if (data.baslamaTarihi || data.bitisTarihi) {
+    <div class="bilgi-satiri">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="etiket">Okuma Tarihleri</span>
+        <span class="deger">
+          {{ data.baslamaTarihi ? (data.baslamaTarihi | date:'dd MMM yyyy') : '—' }}
+          →
+          {{ data.bitisTarihi ? (data.bitisTarihi | date:'dd MMM yyyy') : '—' }}
+        </span>
+      </div>
+    </div>
+  }
+
+  <div class="bilgi-satiri">
+    <mat-icon>calendar_today</mat-icon>
+    <div>
+      <span class="etiket">Eklenme Tarihi</span>
+      <span class="deger">{{ data.eklenmeTarihi | date:'dd MMMM yyyy' }}</span>
+    </div>
+  </div>
+
+  @if (data.etiketler && data.etiketler.length > 0) {
+    <div class="bilgi-satiri">
+      <mat-icon>label</mat-icon>
+      <div>
+        <span class="etiket">Etiketler</span>
+        <div class="modal-etiketler">
+          @for (etiket of data.etiketler; track etiket) {
+            <span class="modal-etiket-pill">{{ etiket }}</span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (data.not) {
+    <div class="not-kutusu">
+      <mat-icon>notes</mat-icon>
+      <p>{{ data.not }}</p>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="kapat()">Kapat</button>
+  <button mat-raised-button color="primary"
+    [routerLink]="['/kitaplar', data.id, 'duzenle']"
+    (click)="kapat()">
+    <mat-icon>edit</mat-icon> Düzenle
+  </button>
+</mat-dialog-actions>
