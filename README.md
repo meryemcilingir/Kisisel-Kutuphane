@@ -1,59 +1,102 @@
-# KutuphaneApp
+# 📚 Kişisel Kütüphane
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+Angular ile geliştirilmiş kişisel kitap takip uygulaması. Okuduğunuz, okuyacağınız ve okumakta olduğunuz kitapları yönetin.
 
-## Development server
+🔗 **Demo:** [Vercel Deploy Linki](#) *(yakında eklenecek)*  
+📁 **Repo:** [github.com/KULLANICI_ADIN/kutuphane-app](#)
 
-To start a local development server, run:
+---
+
+## Özellikler
+
+- **CRUD:** Kitap ekleme, listeleme, düzenleme ve silme
+- **Kanban Board:** Okunacak / Okunuyor / Okundu sütunları ile sürükle-bırak
+- **Arama, Filtreleme, Sıralama:** Tür, yazar, etiket, puan, tarih ve sayfa sayısına göre
+- **Open Library API:** Kitap adı yazınca kapak, sayfa sayısı ve bilgileri otomatik doldurma
+- **Sayfalama:** Sayfa başına 10 / 20 / 50 kitap seçeneği
+- **Okuma Hedefi:** Yıllık hedef belirleme ve ilerleme takibi
+- **Streak Takibi:** Günlük okuma serisi
+- **Değerlendirme:** Kitap bitince puan ve not ekleme
+- **JSON Yedekleme:** Kitap verilerini dışa/içe aktarma
+- **Dark Mode:** Koyu/açık tema desteği
+- **Responsive:** Mobil ve masaüstü uyumlu tasarım
+
+---
+
+## Kurulum
 
 ```bash
+# Depoyu klonla
+git clone https://github.com/KULLANICI_ADIN/kutuphane-app.git
+cd kutuphane-app
+
+# Bağımlılıkları yükle
+npm install
+
+# Geliştirme sunucusunu başlat
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Tarayıcıda `http://localhost:4200` adresini aç.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Mimari
 
-```bash
-ng generate component component-name
+Proje **feature-based** mimari ile kurgulanmıştır:
+
+```
+src/app/
+├── core/
+│   ├── models/          # Book arayüzü ve tip tanımları
+│   ├── services/        # StorageService (localStorage tek erişim noktası)
+│   └── guards/          # UnsavedChangesGuard
+├── shared/
+│   ├── components/      # ConfirmDialog, EmptyState, BookDetail
+│   ├── pipes/           # DurumEtiketPipe
+│   ├── directives/      # DurumRozetDirective
+│   └── validators/      # kitapValidator, sayfaSayisiValidator
+└── features/
+    └── books/
+        ├── services/    # BooksService, GoogleBooksService
+        └── pages/
+            ├── books-list/   # Ana sayfa (kanban, filtre, arama)
+            ├── books-form/   # Kitap ekleme/düzenleme formu
+            └── dashboard/    # İstatistikler ve grafikler
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Teknik Detaylar
 
-## Building
+| Teknoloji | Kullanım |
+|-----------|----------|
+| Angular 22 | Standalone components, Signals, Zoneless |
+| Angular Material | UI bileşenleri |
+| Angular CDK | Drag & Drop (kanban board) |
+| RxJS | Servis katmanı |
+| ng2-charts | İstatistik grafikleri |
+| Open Library API | Kitap bilgisi çekme |
+| localStorage | Veri saklama (yalnızca StorageService üzerinden) |
+| SCSS | Stil, dark mode |
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## Özel Yapı Taşları
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **Custom Pipe:** `DurumEtiketPipe` — `'okunacak'` → `'Okunacak'` dönüşümü (`shared/pipes/durum-etiket-pipe.ts`)
+- **Custom Directive:** `DurumRozetDirective` — Okuma durumuna göre rozet rengi (`shared/directives/durum-rozet.ts`)
+- **Custom Validator:** `sayfaSayisiValidator`, `puanValidator` — Form doğrulama (`shared/validators/kitap-validator.ts`)
+- **Route Guard:** `UnsavedChangesGuard` — Formdan kaydetmeden çıkınca uyarı (`core/guards/unsaved-changes-guard.ts`)
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Ekran Görüntüleri
 
-```bash
-ng test
-```
+> *(Eklenecek)*
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Geliştirici
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Meryem Çilingir** — Staj Projesi, 2026
