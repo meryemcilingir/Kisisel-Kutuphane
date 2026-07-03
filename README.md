@@ -1,5 +1,5 @@
 cat > /home/claude/README.md << 'READMEEOF'
-# 📚 Kişisel Kütüphane
+# Kişisel Kütüphane
 
 Angular ile geliştirilmiş kişisel kitap takip uygulaması. Okuduğunuz, okuyacağınız ve okumakta olduğunuz kitapları yönetin.
 
