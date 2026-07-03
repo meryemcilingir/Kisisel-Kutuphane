@@ -1,3 +1,8 @@
+<img width="972" height="1020" alt="Ekran görüntüsü 2026-07-03 170645" src="https://github.com/user-attachments/assets/5ce86aa1-d241-4286-a4f9-df2e60088d73" />
+<img width="1902" height="1021" alt="Ekran görüntüsü 2026-07-03 170514" src="https://github.com/user-attachments/assets/fb8c062a-abe5-4115-bdd6-89f6ebb28d1a" />
+<img width="1918" height="1007" alt="Ekran görüntüsü 2026-07-03 170500" src="https://github.com/user-attachments/assets/db314d59-ae1a-4e12-883b-f9d87153c2dd" />
+<img width="1887" height="1007" alt="Ekran görüntüsü 2026-07-03 170449" src="https://github.com/user-attachments/assets/40dd4467-7e38-4cf6-8866-56ea4bb722ab" />
+<img width="1883" height="1017" alt="Ekran görüntüsü 2026-07-03 170238" src="https://github.com/user-attachments/assets/80b0efd0-9eec-4fa0-8b7f-3011af7c3080" />
 cat > /home/claude/README.md << 'READMEEOF'
 # Kişisel Kütüphane
 
@@ -105,7 +110,13 @@ src/app/
 
 ## Ekran Görüntüleri
 
-> *(Eklenecek)*
+<img width="1883" height="1017" alt="Ana Sayfa" src="https://github.com/user-attachments/assets/d5878104-6ea7-4abf-beea-82db3b5b1ed7" />
+<img width="972" height="1020" alt="Kitap Ekleme" src="https://github.com/user-attachments/assets/036cf952-204e-4994-a445-404aff687273" />
+<img width="1902" height="1021" alt="İstatistikler" src="https://github.com/user-attachments/assets/7a5c5186-cf65-448e-9858-e7c76e1e35db" />
+<img width="1918" height="1007" alt="Menü" src="https://github.com/user-attachments/assets/2fc6caaa-0c90-4398-b4cf-8187580208a1" />
+<img width="1887" height="1007" alt="Kanban Board" src="https://github.com/user-attachments/assets/d1727758-fbd0-4f7d-800c-30a0d00773c6" />
+
+
 
 ---
 
