@@ -1,9 +1,3 @@
-<img width="972" height="1020" alt="Ekran görüntüsü 2026-07-03 170645" src="https://github.com/user-attachments/assets/5ce86aa1-d241-4286-a4f9-df2e60088d73" />
-<img width="1902" height="1021" alt="Ekran görüntüsü 2026-07-03 170514" src="https://github.com/user-attachments/assets/fb8c062a-abe5-4115-bdd6-89f6ebb28d1a" />
-<img width="1918" height="1007" alt="Ekran görüntüsü 2026-07-03 170500" src="https://github.com/user-attachments/assets/db314d59-ae1a-4e12-883b-f9d87153c2dd" />
-<img width="1887" height="1007" alt="Ekran görüntüsü 2026-07-03 170449" src="https://github.com/user-attachments/assets/40dd4467-7e38-4cf6-8866-56ea4bb722ab" />
-<img width="1883" height="1017" alt="Ekran görüntüsü 2026-07-03 170238" src="https://github.com/user-attachments/assets/80b0efd0-9eec-4fa0-8b7f-3011af7c3080" />
-cat > /home/claude/README.md << 'READMEEOF'
 # Kişisel Kütüphane
 
 Angular ile geliştirilmiş kişisel kitap takip uygulaması. Okuduğunuz, okuyacağınız ve okumakta olduğunuz kitapları yönetin.
@@ -123,4 +117,3 @@ src/app/
 ## Geliştirici
 
 **Meryem Çilingir** — Staj Projesi, 2026
-READMEEOF
